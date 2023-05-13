@@ -4,11 +4,11 @@ services:
   postgresql:
     image: postgres:11-alpine
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_DB: "companydb"
-      POSTGRES_PASSWORD: "secret"
+      POSTGRES_USER: "developer"
+      POSTGRES_DB: "notesapp"
+      POSTGRES_PASSWORD: "supersecretpassword"
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
     volumes:
-      - ./.data/postgresql:/var/lib/postgresql/data/pgdata
+      - ../.data/postgresql:/var/lib/postgresql/data/pgdata
