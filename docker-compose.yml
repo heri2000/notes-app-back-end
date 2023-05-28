@@ -11,4 +11,4 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ../.data/postgresql:/var/lib/postgresql/data/pgdata
+      - ../.data-notes-app/postgresql:/var/lib/postgresql/data/pgdata
