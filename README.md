@@ -1,5 +1,9 @@
 # notes-app-back-end
 
+### A Dicoding sample project
+
+----------
+
 To run the services (PostgreSQL): `docker-compose up`.
 
 To use determined node version, run `nvm use`.
