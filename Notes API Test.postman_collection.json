@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "8eec49df-d363-46c9-b815-91a41b3a3320",
+		"_postman_id": "432d2aa8-4ce8-4734-8294-1a6fd18cafd3",
 		"name": "Notes API Test",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12682791"
 	},
 	"item": [
 		{
@@ -85,9 +86,11 @@
 							"script": {
 								"exec": [
 									"/* referensi: https://learning.postman.com/docs/writing-scripts/script-references/postman-sandbox-api-reference/#sending-requests-from-scripts */",
+									"",
+									"const serverAddress = pm.variables.get('serverAddress');",
 									"    ",
 									"const postRequest = {",
-									"    url: 'http://localhost:5000/users',",
+									"    url: `${serverAddress}/users`,",
 									"    method: 'POST',",
 									"    header: {",
 									"    'Content-Type': 'application/json',",
@@ -373,8 +376,10 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
+									"const serverAddress = pm.variables.get('serverAddress');",
+									"",
 									"const postRequest = {",
-									"    url: 'http://localhost:5000/users',",
+									"    url: `${serverAddress}/users`,",
 									"    method: 'POST',",
 									"    header: {",
 									"    'Content-Type': 'application/json',",
@@ -2283,8 +2288,8 @@
 	"variable": [
 		{
 			"key": "serverAddress",
-			"value": "http://localhost:5000",
-			"type": "default"
+			"value": "http://18.141.236.216:5000",
+			"type": "string"
 		}
 	]
 }
