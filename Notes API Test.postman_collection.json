@@ -363,6 +363,133 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Search Users by Username Related to Dicoding",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Menambahkan user dengan username dicoding",
+									"",
+									"const serverAddress = pm.variables.get('serverAddress');",
+									"",
+									"const addDicodingUserRequest = {",
+									"    method: 'POST',",
+									"    url: `${serverAddress}/users`,",
+									"    header: {",
+									"        'Content-Type': 'application/json',",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: 'dicoding',",
+									"            password: pm.environment.get('newPassword'),",
+									"            fullname: 'Dicoding',",
+									"        }),",
+									"    },",
+									"};",
+									"    ",
+									"pm.sendRequest(addDicodingUserRequest, (error, response) => {",
+									"    console.log(error ? error : response);",
+									"});",
+									"    ",
+									"// menambahkan user dengan username \"dicoding_indonesia\"",
+									"const addDicodingIndonesiaUserRequest = {",
+									"    method: 'POST',",
+									"    url: `${serverAddress}/users`,",
+									"    header: {",
+									"        'Content-Type': 'application/json',",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            username: 'dicoding_indonesia',",
+									"            password: pm.environment.get('newPassword'),",
+									"            fullname: 'Dicoding Indonesia',",
+									"        }),",
+									"    },",
+									"};",
+									"    ",
+									"pm.sendRequest(addDicodingIndonesiaUserRequest, (error, response) => {",
+									"    console.log(error ? error : response);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('response status should be 200', () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"    ",
+									"pm.test('response Content-Type header should have application/json value', () => {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');",
+									"});",
+									"    ",
+									"pm.test('response body should an object', () => {",
+									"    const responseJson = pm.response.json();",
+									"    pm.expect(responseJson).to.be.an('object');",
+									"});",
+									"    ",
+									"pm.test('response body should have correct property and value', () => {",
+									"    const responseJson = pm.response.json();",
+									"    ",
+									"    pm.expect(responseJson).to.have.ownProperty('status');",
+									"    pm.expect(responseJson.status).to.equals('success');",
+									"    pm.expect(responseJson).to.have.ownProperty('data');",
+									"    pm.expect(responseJson.data).to.be.an('object');",
+									"});",
+									"    ",
+									"pm.test('response body data should contain users array', () => {",
+									"    const { data } = pm.response.json();",
+									"    ",
+									"    pm.expect(data).to.have.ownProperty('users');",
+									"    pm.expect(data.users).to.be.an('array');",
+									"});",
+									"    ",
+									"pm.test('the array users should have contain 2 user object related to dicoding username', () => {",
+									"    const { data: { users } } = pm.response.json();",
+									"    ",
+									"    pm.expect(users).to.have.lengthOf(2);",
+									"    ",
+									"    users.forEach((user) => {",
+									"        pm.expect(user).to.be.an('object');",
+									"        pm.expect(user).to.have.ownProperty('id');",
+									"        pm.expect(user).to.have.ownProperty('username');",
+									"        pm.expect(user).to.have.ownProperty('fullname');",
+									"        pm.expect(user.username).to.include('dicoding');",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{serverAddress}}/users?username=dicoding",
+							"host": [
+								"{{serverAddress}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "dicoding"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1074,6 +1201,8 @@
 									"   pm.expect(note.tags).to.eql(expectedTags);\r",
 									"   pm.expect(note).to.have.ownProperty('body');\r",
 									"   pm.expect(note.body).to.equals(expectedBody);\r",
+									"   pm.expect(note).to.have.ownProperty('username');\r",
+									"   pm.expect(note.username).to.be.a('string');\r",
 									"});"
 								],
 								"type": "text/javascript"
