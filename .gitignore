@@ -1,1 +1,5 @@
 node_modules
+src/api/uploads/file
+.env*
+env-pass-123.zip
+*accessKeys.csv

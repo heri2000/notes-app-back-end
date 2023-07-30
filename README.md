@@ -1,6 +1,6 @@
 # notes-app-back-end
 
-### A Dicoding sample project
+### A Dicoding exercise project
 
 ----------
 
